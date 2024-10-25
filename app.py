@@ -39,14 +39,14 @@ The description for this API. It can be very long and **Markdown** is supported.
 """
 
 app.config['SERVERS'] = [
-    {'name': 'Development Server', 'url': 'http://localhost:5000'}
+    {'name': 'Development Server', 'url': 'http://localhost:8080'}
 ]
 
 class HelloWorldData(Schema):
     name = String()
 
 @app.post("/")
-@app.doc(summary='Sample Hello World method that says hello to ur name', responses={"201" : "Successful"})
+@app.doc(summary='Sample Hello World method that says hello to your name', responses={"201" : "Successful"})
 @app.input(HelloWorldData, location='json', example='{"name": "test-name"}')
 def hello_world(json_data):
     """Sample Deployment Test."""
