@@ -1,0 +1,105 @@
+{
+  "components": {
+    "schemas": {
+      "HelloWorldData": {
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "detail": {
+            "properties": {
+              "<location>": {
+                "properties": {
+                  "<field_name>": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "description": "\nThe description for this API. It can be very long and **Markdown** is supported.\n",
+    "title": "HelloWorld API",
+    "version": "1.0.0"
+  },
+  "openapi": "3.0.3",
+  "paths": {
+    "/": {
+      "post": {
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": "{\"name\": \"test-name\"}",
+              "schema": {
+                "$ref": "#/components/schemas/HelloWorldData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            },
+            "description": "Validation error"
+          }
+        },
+        "summary": "Sample Hello World method that says hello to ur name"
+      }
+    },
+    "/healthcheck": {
+      "get": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful"
+          }
+        },
+        "summary": "Basic healthcheck that returns success"
+      }
+    }
+  },
+  "servers": [
+    {
+      "name": "Development Server",
+      "url": "http://localhost:5000"
+    }
+  ],
+  "tags": []
+}
