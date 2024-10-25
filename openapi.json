@@ -75,7 +75,7 @@
             "description": "Validation error"
           }
         },
-        "summary": "Sample Hello World method that says hello to ur name"
+        "summary": "Sample Hello World method that says hello to your name"
       }
     },
     "/healthcheck": {
@@ -98,7 +98,7 @@
   "servers": [
     {
       "name": "Development Server",
-      "url": "http://localhost:5000"
+      "url": "http://localhost:8080"
     }
   ],
   "tags": []
