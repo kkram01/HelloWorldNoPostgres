@@ -1,5 +1,4 @@
-"""Module providing a function printing hello world as a sample."""
-# Copyright 2020 Google, LLC.
+# Copyright 2024 Google, LLC.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,9 +19,9 @@ from apiflask import APIFlask, Schema
 from apiflask.fields import String
 from flask_swagger_ui import get_swaggerui_blueprint
 
-app = APIFlask(__name__, title='HelloWorld API', version='1.0.0', spec_path='/openapi.json')
+app = APIFlask(__name__, title='HelloWorld API', version='1.0.0', spec_path='/swaggerfile.json')
 OPENAPI_URL = "/openapi"
-API_URL = "/openapi.json"
+API_URL = "/swaggerfile.json"
 
 swagger_ui_blueprint = get_swaggerui_blueprint(
     OPENAPI_URL,
@@ -39,20 +38,18 @@ The description for this API. It can be very long and **Markdown** is supported.
 """
 
 app.config['SERVERS'] = [
-    {'name': 'Development Server', 'url': 'http://localhost:8080'}
+    {'name': 'Server', 'url': '/'}
 ]
 
 class HelloWorldData(Schema):
-    name = String()
+    name = String(metadata={'description': 'The name to say hello to'})
 
-@app.post("/")
-@app.doc(summary='Sample Hello World method that says hello to your name', responses={"201" : "Successful"})
-@app.input(HelloWorldData, location='json', example='{"name": "test-name"}')
-def hello_world(json_data):
-    """Sample Deployment Test."""
-    name = json_data['name']
-    return f"Hello! {name}", 201
-
+@app.get("/data")
+@app.output({}, 201)
+@app.doc(summary='Sample Hello World method that says hello to your name')
+def hello_world():  # Use 'data' as the argument name
+    name = os.environ.get('NAME', 'World')
+    return jsonify({"message": f"Hello {name}!"})
 
 @app.get("/healthcheck")
 @app.doc(summary='Basic healthcheck that returns success', responses={"200" : "Successful"})
